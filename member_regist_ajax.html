@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Page Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- jQuery 라이브러리 추가 -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: green; /* 배경색 변경 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 폰트 변경 */
+        }
+
+        #sidebar {
+            width: 100%;
+            max-width: 150px;
+            height: 100vh;
+
+            background-color: yellow; /* 색상 변경 */
+            float: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+        }
+
+        #menu {
+            padding: 20px;
+            color: black; /* 텍스트 색상 변경 */
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #menu li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease; /* 색상 변경 효과 추가 */
+        }
+
+        #menu li:hover {
+            color: #3498db; /* 호버 시 색상 변경 */
+        }
+
+        #content {
+            
+            margin-left: 180px;
+            padding: 20px;
+            background-color: green; /* 배경색 변경 */
+            
+        }
+
+        #content h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        input {
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease; /* 배경색 변경 효과 추가 */
+        }
+
+        button:hover {
+            background-color: #2980b9; /* 호버 시 배경색 변경 */
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <div id="menu">
+            <ul>
+                <li>Our Service</li>
+                <li>About Us</li>
+                <li>Portfolio</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="content">
+        <h2>회원가입</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id">
+
+            <label for="pw">Password:</label>
+            <input type="password" id="pw" name="pw">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Save 버튼이 클릭되었을 때의 이벤트 핸들러
+            $('button[type="submit"]').click(function (e) {
+                e.preventDefault(); // 기본 이벤트 방지 (페이지 새로고침 방지)
+
+                // 입력된 데이터 가져오기
+                var name = $('#name').val();
+                var id = $('#id').val();
+                var pw = $('#pw').val();
+                var email = $('#email').val();
+
+                // Ajax 요청
+                $.ajax({
+                    type: 'POST', // 전송 방식 설정
+                    url: 'registWrite.php', // 백엔드 파일 경로 설정
+                    data: {
+                        name: name,
+                        id: id,
+                        pw: pw,
+                        email: email
+                    },
+                    success: function (response) {
+                        // 성공 시 동작
+                        console.log(response); // 백엔드에서 반환된 데이터 콘솔에 출력
+                        alert("회원가입이 완료되었습니다.");
+                        // 여기에 추가적인 동작을 수행할 수 있습니다.
+                    },
+                    error: function (xhr, status, error) {
+                        // 에러 시 동작
+                        console.error(xhr.responseText); // 에러 메시지 콘솔에 출력
+                        // 여기에 에러 시 수행할 동작을 추가할 수 있습니다.
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
